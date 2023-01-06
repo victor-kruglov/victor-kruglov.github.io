@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+// import logo from './logo.svg';
+import './style.css';
+import Container from 'react-bootstrap/Container';
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+
+import Menubar from './components/Menubar';
+import Footer from './components/Footer';
+
+import { routes } from './routes';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Menubar routes={routes}/>
+      <Container fluid>
+        <div className='main-page'>
+          <HashRouter>
+          <Switch>
+          {routes.map((route,key) => 
+            <Route
+              path={route.path} 
+              component={route.component} 
+              key={key} 
+            />
+          )}
+          <Redirect from='*' to='home'/>
+          </Switch>
+          </HashRouter>
+        </div>
+      </Container>
+      <Footer/>
+    </>
   );
 }
 
